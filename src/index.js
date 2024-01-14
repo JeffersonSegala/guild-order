@@ -8,7 +8,7 @@ import { initThinBackend } from 'thin-backend';
 import { ThinBackend } from 'thin-backend-react';
 
 initThinBackend({
-    host: 'https://buy-a-feature.thinbackend.app'
+    host: 'https://guild-order.thinbackend.app'
 });
 
 ReactDOM.render(

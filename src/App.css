@@ -67,15 +67,50 @@
 }
 
 .member a {
-  color: #62ff62;
   text-decoration: none;
+}
+
+.online a {
+  color: #62ff62;
+}
+
+.offline a {
+  color: #949494;
 }
 
 .events {
   color: lightgray;
 }
 
+input {
+  box-sizing: border-box;
+  width: 100%;
+  color: #fff;
+  background: url(background.png);
+  border: 1px inset #767676;
+  border-color: #2d2d2d #767676 #767676 #2d2d2d;
+  outline: none;
+  padding: 0.25rem;
+  font-family: monospace;
+}
 
+button {
+  color: #d3d3d3;
+  border: 1px solid;
+  border-image: url(button.png) 1 fill;
+  font-family: monospace;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
 
 /* Responsive layout - makes a one column layout instead of a two-column layout */
 @media (max-width: 800px) {
