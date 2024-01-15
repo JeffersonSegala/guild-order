@@ -8,6 +8,7 @@ function App() {
   const [guild, setGuild] = useState(false);
   const [memberName, setMemberName] = useState('');
   const [partyName, setPartyName] = useState('');
+  const [userKey, setUserKey] = useState('');
   const parties = useQuery(query('party').orderByDesc('id'));
   const partyMembers = useQuery(query('party_member').orderByDesc('id'));
 
@@ -15,9 +16,15 @@ function App() {
     fetch('https://dev.tibiadata.com/v3/guild/order')
       .then(response => response.json())
       .then(data => {
-        console.log('response', data)
         setGuild(data.guilds.guild)
       });
+
+      let lsUserKey = localStorage.getItem("userKey");
+      if (!lsUserKey) {
+        lsUserKey = new Date().getTime();
+        localStorage.setItem("userKey", lsUserKey)
+      }
+      setUserKey(lsUserKey)
   }, []);
   
   const charTibiaLink = (name) => {
@@ -25,14 +32,14 @@ function App() {
   }
 
   const addPartyMember = (partyId, name) => {
-    createRecord('party_member', { partyId: partyId, name: name });
+    createRecord('party_member', { partyId: partyId, name: name, userkey: userKey });
     setMemberName('')
   }
 
   const createParty = () => {
     if (!partyName) return;
-    
-    createRecord('party', { name: partyName });
+
+    createRecord('party', { name: partyName, userkey: userKey });
     setPartyName('')
   }
 
@@ -94,7 +101,8 @@ function App() {
                 <div className="flexRow" key={member.id}>
                   {index > 4 ? 'Reserva ' : ''}
                   
-                  <button onClick={() => deleteRecord('party_member', member.id)}> &nbsp;X&nbsp; </button>
+                  {userKey === member.userkey ?
+                   <button onClick={() => deleteRecord('party_member', member.id)}> &nbsp;X&nbsp; </button> : ''}
                   {getGuildMember(member.name)}
                   
 
