@@ -7,6 +7,7 @@ import { createRecord, deleteRecord } from 'thin-backend';
 function App() {
   const [guild, setGuild] = useState(false);
   const [memberName, setMemberName] = useState('');
+  const [partyName, setPartyName] = useState('');
   const parties = useQuery(query('party').orderByDesc('id'));
   const partyMembers = useQuery(query('party_member').orderByDesc('id'));
 
@@ -26,6 +27,13 @@ function App() {
   const addPartyMember = (partyId, name) => {
     createRecord('party_member', { partyId: partyId, name: name });
     setMemberName('')
+  }
+
+  const createParty = () => {
+    if (!partyName) return;
+    
+    createRecord('party', { name: partyName });
+    setPartyName('')
   }
 
   const getGuildMember = (name) => {
@@ -80,7 +88,7 @@ function App() {
         {parties?.map(party => {
           return (
           <div className="simpleWindow" key={party.id} >
-            <span>{party.name + ' - ' + party.schedule}</span>
+            <span>{party.name}</span>
             {partyMembers?.filter(member => member.partyId === party.id).map((member, index) => {
               return (
                 <div className="flexRow" key={member.id}>
@@ -100,7 +108,9 @@ function App() {
           )
         })}
 
-        <button onClick={() => {}}>Create Party</button>
+        <div className="flexRow">
+          <input value={partyName} onChange={(e) => setPartyName(e.target.value)} /><button onClick={createParty}>Create PT</button>
+        </div>
 
         {/* <div className="simpleWindow" >
           <span>GT</span>
