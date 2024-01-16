@@ -25,7 +25,7 @@ const Parties = ({ getGuildMember, userKey }) => {
       })}
 
       <div className="flexRow">
-        <input value={partyName} onChange={(e) => setPartyName(e.target.value)} /><button onClick={createParty}>Create PT</button>
+        <input value={partyName} onChange={(e) => setPartyName(e.target.value)} placeholder='Descrição da PT' /><button onClick={createParty}>Criar PT</button>
       </div>   
     </>
   )

@@ -61,11 +61,12 @@ const EditParty = ({ party, user, open, handleClose }) => {
           <CloseOutlinedIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
         </Typography>
         <br/>
+        <input value={party.name} />
         <TextField 
           type="number" 
           label="Valor" 
           variant="standard"
-          defaultValue={sendValue} 
+          defaultValue={party.name} 
           onChange={handleChangeSendValue} />
         <br/>
         <br/>

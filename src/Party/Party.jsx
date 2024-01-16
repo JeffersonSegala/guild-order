@@ -49,10 +49,10 @@ const Party = ({ party, getGuildMember, userKey }) => {
       })}
 
       <div className="flexRow">
-        <input value={memberName} onChange={(e) => setMemberName(e.target.value)} /><button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
+        <input value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder='Char name' /><button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
       </div>
-
       
+      {/* <EditParty party={party} open={openEdit} handleClose={() => setOpenEdit(false)} /> */}
     </Window>
   );
 
