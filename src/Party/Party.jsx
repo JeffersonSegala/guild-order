@@ -53,7 +53,7 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
     return (<>
       <GuildMember member={getGuildMember(partyMember.name)} />
             
-      {userKey === partyMember.userkey ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
+      {userKey === partyMember.userkey || admins.find(admin => admin.userkey === userKey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
       {buildSlot(guildMember)}
     </>)
