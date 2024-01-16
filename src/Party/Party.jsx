@@ -25,7 +25,7 @@ const Party = ({ party, getGuildMember, userKey }) => {
   const buildTitle = () => {
     let title = party.name
     if (party.size) {
-      title = `[${partyMembers().length}/${party.size}] ${title}`
+      title = `[${partyMembers()?.length}/${party.size}] ${title}`
     }
     return <div onClick={handleOpenEdit}>{title}</div>
   }
