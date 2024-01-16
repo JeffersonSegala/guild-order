@@ -116,7 +116,6 @@ const CreateParty = ({ party, open, handleClose, userKey }) => {
 
         <div className='flexColumn'>
           <button onClick={handleSave} >Salvar</button> 
-          <button onClick={handleSave} >Excluir</button> 
         </div>
       </Box>
     </Modal>
