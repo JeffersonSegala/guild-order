@@ -68,7 +68,7 @@ const CreateParty = ({ party, open, handleClose, userKey }) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '30%',
+    width: '60%',
     maxWidth: '80%',
     bgcolor: 'background.paper',
     boxShadow: 24,
