@@ -17,6 +17,7 @@ function App() {
     fetch('https://dev.tibiadata.com/v3/guild/order')
       .then(response => response.json())
       .then(data => {
+        console.log('a', data.guilds.guild)
         setGuild(data.guilds.guild)
       });
 
@@ -44,7 +45,7 @@ function App() {
     if (member) {
       return buildGuildMember(member)
     } else {
-      return buildGuildMember({name: name, status: 'offline', vocation: undefined, level: '?' })
+      return buildGuildMember({name: name, status: 'offline', vocation: 'Undefined', level: '?' })
     }
   }
 
