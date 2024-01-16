@@ -2,7 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
-import { createRecord, deleteRecord } from 'thin-backend';
+import { createRecord } from 'thin-backend';
 import Party from './Party/Party';
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
     if (member) {
       return buildGuildMember(member)
     } else {
-      return name
+      return buildGuildMember({name: name, status: 'offline', vocation: undefined, level: '?' })
     }
   }
 

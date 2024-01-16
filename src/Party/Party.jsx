@@ -9,6 +9,8 @@ const Party = ({ party, getGuildMember, userKey }) => {
   const partyMembers = useQuery(query('party_member').orderByDesc('id'));
 
   const addPartyMember = () => {
+    if (!memberName) return;
+    
     createRecord('party_member', { partyId: party.id, name: memberName, userkey: userKey });
     setMemberName('')
   }
