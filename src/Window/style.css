@@ -1,0 +1,21 @@
+.simpleWindow {
+  flex: 0 0 100%;
+  border-image: url(../windowborder.png);
+  border-image-slice: 15 4 4;
+  border-image-repeat: repeat;
+  border-style: solid;
+  border-width: 4px;
+  border-top-width: 18px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  gap: 0.5rem;
+  align-items: flex-start;
+
+  & > span:first-child {
+    font-size: 0.75rem;
+    margin-top: -1.4rem;
+    margin-left: -0.25rem;
+  }
+}

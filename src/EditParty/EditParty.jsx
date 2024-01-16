@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { updateRecord } from 'thin-backend';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-const TransferModal = ({ user, open, handleClose }) => {
+const EditParty = ({ party, user, open, handleClose }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [users, setUsers] = useState([]);
   const [sendUser, setSendUser] = useState({});
@@ -57,7 +57,7 @@ const TransferModal = ({ user, open, handleClose }) => {
       onClose={handleClose} >
       <Box sx={style}>
         <Typography variant="h6" component="h2" className='send-header-container'>
-          <div>Transferência</div>
+          <div>{}</div>
           <CloseOutlinedIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
         </Typography>
         <br/>
@@ -101,4 +101,4 @@ const TransferModal = ({ user, open, handleClose }) => {
   );
 }
 
-export default TransferModal;
+export default EditParty;

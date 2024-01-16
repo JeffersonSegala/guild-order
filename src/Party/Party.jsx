@@ -3,10 +3,17 @@ import './style.css';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
 import { createRecord, deleteRecord } from 'thin-backend';
+import Window from '../Window/Window';
+import EditParty from '../EditParty/EditParty';
 
 const Party = ({ party, getGuildMember, userKey }) => {
   const [memberName, setMemberName] = useState('');
-  const partyMembers = useQuery(query('party_member').orderByDesc('id'));
+  const [openEdit, setOpenEdit] = useState(false);
+  const allPartyMembers = useQuery(query('party_member').orderByDesc('id'));
+
+  const partyMembers = () => {
+    return allPartyMembers?.filter(member => member.partyId === party.id)
+  }
 
   const addPartyMember = () => {
     if (!memberName.trim('')) return;
@@ -15,22 +22,38 @@ const Party = ({ party, getGuildMember, userKey }) => {
     setMemberName('')
   }
 
+  const buildTitle = () => {
+    let title = party.name
+    if (party.size) {
+      title = `[${partyMembers().length}/${party.size}] ${title}`
+    }
+    return <div onClick={handleOpenEdit}>{title}</div>
+  }
+
+  const handleOpenEdit = () => {
+    setOpenEdit(true)
+  }
+
   return (
-    <div className="simpleWindow" key={party.id} >
-      <span>{party.name}</span>
-      {partyMembers?.filter(member => member.partyId === party.id).map((member, index) => {
+    <Window title={buildTitle()} key={party.id} >
+      {partyMembers()?.map(member => {
         return (
           <div className="flexRow" key={member.id}>
-            {userKey === member.userkey ?
-              <button onClick={() => deleteRecord('party_member', member.id)}> &nbsp;X&nbsp; </button> : ''}
+
             {getGuildMember(member.name)}
+            
+            {userKey === member.userkey ? <button onClick={() => deleteRecord('party_member', member.id)}> &nbsp;X&nbsp; </button> : ''}
+
           </div>
         )
       })}
+
       <div className="flexRow">
         <input value={memberName} onChange={(e) => setMemberName(e.target.value)} /><button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
       </div>
-    </div>
+
+      
+    </Window>
   );
 
 }

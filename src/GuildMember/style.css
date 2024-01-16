@@ -1,0 +1,17 @@
+.vocationImage {
+  width: 21px;
+  vertical-align: middle;
+  border-radius: 50% 0%;
+}
+
+.member a {
+  text-decoration: none;
+}
+
+.online a {
+  color: #62ff62;
+}
+
+.offline a {
+  color: #949494;
+}
