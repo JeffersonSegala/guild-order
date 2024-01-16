@@ -1,0 +1,10 @@
+.send-header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.partyCrud img {
+    width: 21px;
+    height: 21px;
+}

@@ -48,6 +48,10 @@ input {
   outline: none;
   padding: 0.25rem;
   font-family: monospace;
+
+  &:disabled {
+    color: gray;
+  }
 }
 
 button {
@@ -55,6 +59,7 @@ button {
   border: 1px solid;
   border-image: url(button.png) 1 fill;
   font-family: monospace;
+  cursor: pointer;
 }
 
 .flexColumn {

@@ -2,18 +2,16 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Parties from './Party/Parties';
-import GuildMember from './GuildMember/GuildMember';
 
 function App() {
   const [guild, setGuild] = useState(false);
   const [userKey, setUserKey] = useState('');
 
   useEffect(() => {
-    fetch('https://dev.tibiadata.com/v3/guild/order')
+    fetch('https://dev.tibiadata.com/v4/guild/order')
       .then(response => response.json())
       .then(data => {
-        console.log('a', data.guilds.guild)
-        setGuild(data.guilds.guild)
+        setGuild(data.guild)
       });
 
       let lsUserKey = localStorage.getItem("userKey");
@@ -24,15 +22,6 @@ function App() {
       setUserKey(lsUserKey)
   }, []);
   
-  const getGuildMember = (name) => {
-    const member = guild?.members?.find(member => member.name.toLowerCase() === name.toLowerCase())
-    if (member) {
-      return <GuildMember member={member} />
-    } else {
-      return <GuildMember member={{name: name, status: 'offline', vocation: 'Undefined', level: '?' }} />
-    }
-  }
-
   return (
     <div className="App">
             
@@ -44,7 +33,7 @@ function App() {
 
         <OnlineMembers members={guild?.members} />
 
-        <Parties getGuildMember={getGuildMember} userKey={userKey} />   
+        <Parties guildMembers={guild?.members} userKey={userKey} />   
        
       </div>
 

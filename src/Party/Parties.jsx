@@ -2,31 +2,25 @@ import React, { useState } from 'react';
 import './style.css';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
-import { createRecord } from 'thin-backend';
 import Party from './Party';
+import CreateParty from '../CreateParty/CreateParty';
 
-const Parties = ({ getGuildMember, userKey }) => {
-  const [partyName, setPartyName] = useState('');
+const Parties = ({ guildMembers, userKey }) => {
+  const [openCreate, setOpenCreate] = useState(false);
   const parties = useQuery(query('party').orderByDesc('id'));
-
-  const createParty = () => {
-    if (!partyName) return;
-
-    createRecord('party', { name: partyName, userkey: userKey });
-    setPartyName('')
-  }
+  const admins = useQuery(query('admin').orderByDesc('id'));
 
   return (
     <>
       {parties?.map(party => {
         return (
-          <Party party={party} getGuildMember={getGuildMember} userKey={userKey} />
+          <Party party={party} guildMembers={guildMembers} userKey={userKey} admins={admins} key={party.id} />
         )
       })}
 
-      <div className="flexRow">
-        <input value={partyName} onChange={(e) => setPartyName(e.target.value)} placeholder='Descrição da PT' /><button onClick={createParty}>Criar PT</button>
-      </div>   
+      <CreateParty party={{}} userKey={userKey} open={openCreate} handleClose={() => setOpenCreate(false)} />
+
+      <button onClick={() => setOpenCreate(true)}>Criar PT</button>
     </>
   )
 
