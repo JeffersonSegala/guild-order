@@ -40,7 +40,7 @@ function App() {
   }
 
   const getGuildMember = (name) => {
-    const member = guild?.members?.find(member => member.name === name)
+    const member = guild?.members?.find(member => member.name.toLowerCase() === name.toLowerCase())
     if (member) {
       return buildGuildMember(member)
     } else {
