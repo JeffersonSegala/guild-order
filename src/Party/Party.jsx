@@ -28,7 +28,7 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
     if (party.size) {
       title = `[${partyMembers()?.length}/${party.size}] ${title}`
     } else if (party.qtEk || party.qtEd || party.qtSt) {
-      title = `[${party.qtEk}x${party.qtEd}x${party.qtSt}] ${title}` 
+      title = `[${party.qtEk ? 'EKs:' + party.qtEk: ''} ${party.qtEd ? 'EDs:' + party.qtEd: ''}${party.qtSt ? ' Shooters:' + party.qtSt : ''}] ${title}` 
     }
     return <div onClick={handleOpenEdit}>{title}</div>
   }
