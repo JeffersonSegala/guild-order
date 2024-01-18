@@ -14,7 +14,7 @@
   align-items: flex-start;
 
   & > span:first-child {
-    font-size: 0.75rem;
+    font-size: 11px;
     margin-top: -1.4rem;
     margin-left: -0.25rem;
   }

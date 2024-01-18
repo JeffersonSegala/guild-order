@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
@@ -10,11 +10,41 @@ import GuildMember from '../GuildMember/GuildMember';
 const Party = ({ party, guildMembers, userKey, admins }) => {
   const [memberName, setMemberName] = useState('');
   const [openEdit, setOpenEdit] = useState(false);
-  const allPartyMembers = useQuery(query('party_member').orderByAsc('createdAt'));
+  const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
+  const [players, setPlayers] = useState(guildMembers);
+  const [fetched, setFetched] = useState([]); 
 
-  const partyMembers = () => {
-    return allPartyMembers?.filter(member => member.partyId === party.id)
-  }
+  useEffect(() => {
+    if (!(partyMembers && players))  {
+      return;
+    }
+
+    const toFecth = partyMembers
+                      .filter(partyMember => !players.find(player => player.name.toLowerCase() === partyMember.name.toLowerCase()))
+                      .filter(partyMember => !fetched.find(fetched => fetched.toLowerCase() === partyMember.name.toLowerCase()))
+                      .map(character => character.name)
+                      
+    if (toFecth.length === 0) {
+      return
+    }
+
+    setFetched([...fetched, ...toFecth])
+                      
+    const urls = toFecth.map(name => `https://api.tibiadata.com/v4/character/${name}`)
+
+    console.log('urls', urls)
+    const requests = urls.map(url => fetch(url))
+    Promise.all(requests)
+      .then(results => Promise.all(results.map(r => r.json())) )
+      .then(results => { 
+        const fetchedPlayers = []
+        results.forEach(r => {
+          fetchedPlayers.push(r.character.character)
+        }) 
+        setPlayers([...players, ...fetchedPlayers])
+      })
+      
+  }, [partyMembers, guildMembers, players, fetched]);
 
   const addPartyMember = () => {
     if (!memberName.trim('')) return;
@@ -26,7 +56,7 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
   const buildTitle = () => {
     let title = party.name
     if (party.size) {
-      title = `[${partyMembers()?.length}/${party.size}] ${title}`
+      title = `[${partyMembers?.length}/${party.size}] ${title}`
     } else if (party.qtEk || party.qtEd || party.qtSt) {
       title = `[${party.qtEk ? 'EKs:' + party.qtEk: ''} ${party.qtEd ? 'EDs:' + party.qtEd: ''}${party.qtSt ? ' Shooters:' + party.qtSt : ''}] ${title}` 
     }
@@ -39,23 +69,24 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
     }
   }
 
-  const getGuildMember = (name) => {
-    const member = guildMembers?.find(member => member.name.toLowerCase() === name.toLowerCase())
-    if (member) {
-      return member
+  const getPlayer = (name) => {
+    const player = players?.find(player => player.name.toLowerCase() === name.toLowerCase())
+    if (player) {
+      return player
     }
-    return {name: name, status: 'offline', vocation: 'Undefined', level: '?' }
+    
+    return {name: name, status: 'offline', vocation: 'Undefined', level: '?' };
   }
 
   const buildPartyMember = (partyMember) => {
-    const guildMember = getGuildMember(partyMember.name);
+    const player = getPlayer(partyMember.name);
     
     return (<>
-      <GuildMember member={getGuildMember(partyMember.name)} />
+      <GuildMember member={player} />
             
       {userKey === partyMember.userkey || admins.find(admin => admin.userkey === userKey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
-      {buildSlot(guildMember)}
+      {buildSlot(player)}
     </>)
   }
 
@@ -64,6 +95,9 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
   let countSt = 0;
   let count = 0;
   const buildSlot = (guildMember) => {
+    if (!guildMember?.vocation) return 'ops';
+
+
     if (party.size) {
       count++
       if (count > party.size) {
@@ -83,7 +117,7 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
       } else {
         return 'reserva'
       }
-    } else if (party.qtEd && (guildMember.vocation.includes('Paladin') || guildMember.vocation.includes('Sorcerer')) ) {
+    } else if (party.qtSt && (guildMember.vocation.includes('Paladin') || guildMember.vocation.includes('Sorcerer')) ) {
       countSt++
       if (countSt <= party.qtSt) {
         return countSt + '/' + party.qtSt
@@ -92,10 +126,10 @@ const Party = ({ party, guildMembers, userKey, admins }) => {
       }
     }
   }
-  
+
   return (
     <Window title={buildTitle()} key={party.id} id={party.name} >
-      {partyMembers()?.map((partyMember, index) => {
+      {partyMembers?.map((partyMember, index) => {
         return (
           <div className="flexRow" key={partyMember.id}>
             {buildPartyMember(partyMember)}

@@ -12,6 +12,11 @@ const Parties = ({ guildMembers, userKey }) => {
 
   return (
     <>
+      {/* {parties && 
+      
+      <Party party={parties[0]} guildMembers={guildMembers} userKey={userKey} admins={admins} />
+      } */}
+
       {parties?.map(party => {
         return (
           <Party party={party} guildMembers={guildMembers} userKey={userKey} admins={admins} key={party.id} />
