@@ -45,7 +45,6 @@ const Party = ({ party, players, userKey, admins }) => {
   }
 
   const buildPartyMember = (partyMember) => {
-    console.log('partyMembers', partyMember)
     const player = getPlayer(partyMember.name);
     
     return (<>

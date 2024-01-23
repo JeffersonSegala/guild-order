@@ -9,13 +9,13 @@ function App() {
   const [userKey, setUserKey] = useState('');
 
   useEffect(() => {
-    fetch('https://dev.tibiadata.com/v4/guild/order')
+    fetch('https://api.tibiadata.com/v4/guild/order')
       .then(response => response.json())
       .then(data => {
         setGuild(data.guild.members)
     });
 
-    fetch('https://dev.tibiadata.com/v4/guild/united')
+    fetch('https://api.tibiadata.com/v4/guild/united')
     .then(response => response.json())
     .then(data => {
       setUnited(data.guild.members)
