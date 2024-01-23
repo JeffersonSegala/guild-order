@@ -13,7 +13,7 @@ const Party = ({ party, players, userKey, admins }) => {
   const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
 
   const addPartyMember = () => {
-    if (!memberName.trim('')) return;
+    if (!memberName.trim('') || partyMembers.find(pm => pm.name.toLowerCase() === memberName.toLowerCase().trim(''))) return;
 
     createRecord('party_member', { partyId: party.id, name: memberName.trim(''), userkey: userKey });
     setMemberName('')
@@ -45,6 +45,7 @@ const Party = ({ party, players, userKey, admins }) => {
   }
 
   const buildPartyMember = (partyMember) => {
+    console.log('partyMembers', partyMember)
     const player = getPlayer(partyMember.name);
     
     return (<>
