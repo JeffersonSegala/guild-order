@@ -4,22 +4,29 @@ import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Parties from './Party/Parties';
 
 function App() {
-  const [guild, setGuild] = useState(false);
+  const [guild, setGuild] = useState([]);
+  const [united, setUnited] = useState([]);
   const [userKey, setUserKey] = useState('');
 
   useEffect(() => {
     fetch('https://dev.tibiadata.com/v4/guild/order')
       .then(response => response.json())
       .then(data => {
-        setGuild(data.guild)
-      });
+        setGuild(data.guild.members)
+    });
 
-      let lsUserKey = localStorage.getItem("userKey");
-      if (!lsUserKey) {
-        lsUserKey = new Date().getTime();
-        localStorage.setItem("userKey", lsUserKey)
-      }
-      setUserKey(lsUserKey)
+    fetch('https://dev.tibiadata.com/v4/guild/united')
+    .then(response => response.json())
+    .then(data => {
+      setUnited(data.guild.members)
+  });
+
+    let lsUserKey = localStorage.getItem("userKey");
+    if (!lsUserKey) {
+      lsUserKey = new Date().getTime();
+      localStorage.setItem("userKey", lsUserKey)
+    }
+    setUserKey(lsUserKey)
   }, []);
   
   return (
@@ -31,9 +38,9 @@ function App() {
 
       <div className="flex-container">
 
-        <OnlineMembers members={guild?.members} />
+        <OnlineMembers members={guild} />
 
-        <Parties guildMembers={guild?.members} userKey={userKey} />   
+        <Parties players={guild.concat(united)} userKey={userKey} />   
        
       </div>
 

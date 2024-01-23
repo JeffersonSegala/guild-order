@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
@@ -7,44 +7,10 @@ import Window from '../Window/Window';
 import CreateParty from '../CreateParty/CreateParty';
 import GuildMember from '../GuildMember/GuildMember';
 
-const Party = ({ party, guildMembers, userKey, admins }) => {
+const Party = ({ party, players, userKey, admins }) => {
   const [memberName, setMemberName] = useState('');
   const [openEdit, setOpenEdit] = useState(false);
   const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
-  const [players, setPlayers] = useState(guildMembers);
-  const [fetched, setFetched] = useState([]); 
-
-  useEffect(() => {
-    if (!(partyMembers && players))  {
-      return;
-    }
-
-    const toFecth = partyMembers
-                      .filter(partyMember => !players.find(player => player.name.toLowerCase() === partyMember.name.toLowerCase()))
-                      .filter(partyMember => !fetched.find(fetched => fetched.toLowerCase() === partyMember.name.toLowerCase()))
-                      .map(character => character.name)
-                      
-    if (toFecth.length === 0) {
-      return
-    }
-
-    setFetched([...fetched, ...toFecth])
-                      
-    const urls = toFecth.map(name => `https://api.tibiadata.com/v4/character/${name}`)
-
-    console.log('urls', urls)
-    const requests = urls.map(url => fetch(url))
-    Promise.all(requests)
-      .then(results => Promise.all(results.map(r => r.json())) )
-      .then(results => { 
-        const fetchedPlayers = []
-        results.forEach(r => {
-          fetchedPlayers.push(r.character.character)
-        }) 
-        setPlayers([...players, ...fetchedPlayers])
-      })
-      
-  }, [partyMembers, guildMembers, players, fetched]);
 
   const addPartyMember = () => {
     if (!memberName.trim('')) return;

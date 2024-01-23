@@ -5,21 +5,16 @@ import { useQuery } from 'thin-backend-react';
 import Party from './Party';
 import CreateParty from '../CreateParty/CreateParty';
 
-const Parties = ({ guildMembers, userKey }) => {
+const Parties = ({ players, userKey }) => {
   const [openCreate, setOpenCreate] = useState(false);
   const parties = useQuery(query('party').orderByDesc('id'));
   const admins = useQuery(query('admin').orderByDesc('id'));
 
   return (
     <>
-      {/* {parties && 
-      
-      <Party party={parties[0]} guildMembers={guildMembers} userKey={userKey} admins={admins} />
-      } */}
-
       {parties?.map(party => {
         return (
-          <Party party={party} guildMembers={guildMembers} userKey={userKey} admins={admins} key={party.id} />
+          <Party party={party} players={players} userKey={userKey} admins={admins} key={party.id} />
         )
       })}
 

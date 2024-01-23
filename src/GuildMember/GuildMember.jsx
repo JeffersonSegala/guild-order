@@ -8,7 +8,9 @@ const GuildMember = ({ member }) => {
   }
 
   return (
+    
     <div className={`member ${member.status === "online" ? 'online' : 'offline'}`} key={member.name} >
+      {/* {console.log('member', member)} */}
       <a href={charTibiaLink(member.name)} target='_blank' rel='noreferrer'>
       <img src={member.vocation+'.png'} className="vocationImage" alt="voc" /> 
       {' ' + member.name + ' (' + member.level + ')'}
