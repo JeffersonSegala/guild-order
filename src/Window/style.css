@@ -13,9 +13,25 @@
   gap: 4px;
   align-items: flex-start;
 
-  & > span:first-child {
+  /* & > div:first-child {
     font-size: 11px;
     margin-top: -1.4rem;
     margin-left: -0.25rem;
-  }
+  } */
+}
+
+.windowHeaders {
+  font-size: 10px;
+  margin-top: -1.4rem;
+  margin-left: -0.25rem;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.headerIcon {
+  height: 12px;
+  cursor: pointer;
 }

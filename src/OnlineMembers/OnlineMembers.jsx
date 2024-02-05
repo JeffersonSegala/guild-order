@@ -14,7 +14,7 @@ const OnlineMembers = ({ members }) => {
   }
 
   return (
-    <Window title={'Membros Online'} >
+    <Window title={'Membros Online'} isOpen={true} >
       {onlineMembersByLevel()?.map(member => {
         return (
           <GuildMember member={member} key={member.name} />        
