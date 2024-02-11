@@ -82,7 +82,7 @@ const Party = ({ party, players, userKey, admins }) => {
         return 'reserva'
       }
     } else if (partyMember.service) {
-      return <><img src={'greenBp.gif'} className="party__icon" alt="img" /></>
+      return <><img src={'greenBp.gif'} className="party__icon" alt="img" />me carrega</>
     } else if (party.qtEk && guildMember.vocation.includes('Knight')) {
       countEk++
       if (countEk <= party.qtEk) {
