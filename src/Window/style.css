@@ -1,4 +1,4 @@
-.simpleWindow {
+.window {
   flex: 0 0 100%;
   border-image: url(../windowborder.png);
   border-image-slice: 15 4 4;
@@ -20,7 +20,7 @@
   } */
 }
 
-.windowHeaders {
+.window__headers {
   font-size: 10px;
   margin-top: -1.4rem;
   margin-left: -0.25rem;
@@ -31,7 +31,12 @@
   justify-content: space-between;
 }
 
-.headerIcon {
+.window__header-icon {
   height: 12px;
   cursor: pointer;
+}
+
+.window__actions {
+  display: flex;
+  gap: 2px;
 }

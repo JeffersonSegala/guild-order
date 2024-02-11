@@ -1,0 +1,9 @@
+.deleteParty__icon {
+    vertical-align: middle;
+}
+
+.deleteParty__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 12px
+}

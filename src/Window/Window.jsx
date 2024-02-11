@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import './style.css';
 
-const Window = ({ children, title, id, isOpen }) => {
+const Window = ({ children, title, id, isOpen, onClose, onEdit }) => {
   const [open, setOpen] = useState(isOpen)
   
   return (
-    <div className="simpleWindow" id={id} >
-      <div className='windowHeaders' >
+    <div className="window" id={id} >
+      <div className='window__headers' >
         <div>{title}</div>
-        <img src={open ? 'minusIcon.png' : 'plusIcon.png'} className="headerIcon" alt="" onClick={() => setOpen(open => !open)} /> 
+        <div className='window__actions'>
+          <img src={open ? 'minusIcon.png' : 'plusIcon.png'} className="window__header-icon" alt="" onClick={() => setOpen(open => !open)} /> 
+          {onEdit && 
+            <img src={'iconOptions.jpg'} className="window__header-icon" alt="" onClick={onEdit} /> 
+          }
+          {onClose && 
+            <img src={'iconClose.jpg'} className="window__header-icon" alt="" onClick={onClose} /> 
+          }
+        </div>
       </div>
       {open && children}
     </div>

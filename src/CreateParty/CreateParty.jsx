@@ -6,9 +6,9 @@ import { createRecord } from 'thin-backend';
 import { updateRecord } from 'thin-backend';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
-const CreateParty = ({ party, open, handleClose, userKey }) => {
+const DeleteParty = ({ party, open, handleClose, userKey }) => {
   const [showMessage, setShowMessage] = useState(false);
-  const [name, setName] = useState(party.name);
+  const [name, setName] = useState(party.name || '');
   const [size, setSize] = useState(party.size || '');
   const [qtEk, setQtEk] = useState(party.qtEk || '');
   const [qtEd, setQtEd] = useState(party.qtEd || '');
@@ -81,7 +81,7 @@ const CreateParty = ({ party, open, handleClose, userKey }) => {
 
   return (
     <>
-    <Modal open={open} onClose={handleClose} className='partyCrud' >
+    <Modal open={open} onClose={handleClose} >
        
       <Box sx={style}>
       
@@ -95,27 +95,27 @@ const CreateParty = ({ party, open, handleClose, userKey }) => {
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Descrição da PT ( adicione horário e informações relevantes )' />
         <br/>
         <div className='flexRow' >
-          <img src={'Elite Knight.png'} className="vocationImage" alt="voc" style={{marginLeft: '26px'}} /> 
+          <img src={'Elite Knight.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={qtEk} type="number" onChange={(e) => setQtEk(e.target.value)} disabled={disableSpecific()} placeholder='EKs' />
         </div>
         <div className='flexRow' >
-          <img src={'Elder Druid.png'} className="vocationImage" alt="voc" style={{marginLeft: '26px'}} /> 
+          <img src={'Elder Druid.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={qtEd} type="number" onChange={(e) => setQtEd(e.target.value)} disabled={disableSpecific()} placeholder='EDs'  />
         </div>
         <div className='flexRow' >
-          <img src={'Royal Paladin.png'} className="vocationImage" alt="voc" /> 
-          <img src={'Master Sorcerer.png'} className="vocationImage" alt="voc" /> 
+          <img src={'Royal Paladin.png'} className="vocationImage vocIcon" alt="voc" /> 
+          <img src={'Master Sorcerer.png'} className="vocationImage vocIcon" alt="voc" /> 
           <input value={qtSt} type="number" onChange={(e) => setQtSt(e.target.value)} disabled={disableSpecific()}  placeholder='Shooters' />
         </div>
         <br/>
         <div className='flexRow' >
-          <img src={'Undefined.png'} className="vocationImage" alt="voc" style={{marginLeft: '26px'}} /> 
+          <img src={'Undefined.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={size} type="number" onChange={(e) => setSize(e.target.value)} disabled={disableGeneric()} placeholder='Sem restrição' />
         </div>      
         <br/>
 
         <div className='flexColumn'>
-          <button onClick={handleSave} >Salvar</button> 
+          <button onClick={handleSave} ><img src={'runeUH.gif'} className="deleteParty__icon" alt="voc" />Salvar</button> 
         </div>
       </Box>
     </Modal>
@@ -131,4 +131,4 @@ const CreateParty = ({ party, open, handleClose, userKey }) => {
   );
 }
 
-export default CreateParty;
+export default DeleteParty;
