@@ -64,7 +64,7 @@ const Party = ({ party, players, userKey, admins }) => {
   }
 
   const hasPermission = (itemUserKey) => {
-    return itemUserKey === userKey || admins.find(admin => admin.userkey === userKey)
+    return itemUserKey === userKey || admins?.find(admin => admin.userkey === userKey)
   }
 
   let countEk = 0;

@@ -12,7 +12,7 @@ const Parties = ({ players, userKey }) => {
 
   return (
     <>
-      {parties?.map(party => {
+      {parties?.sort((a, b) => a.name.localeCompare(b.name)).map(party => {
         return (
           <Party party={party} players={players} userKey={userKey} admins={admins} key={party.id} />
         )
