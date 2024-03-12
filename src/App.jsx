@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Parties from './Party/Parties';
+import Header from './Components/Header/Header';
 
 function App() {
   const [guild, setGuild] = useState([]);
@@ -32,9 +33,7 @@ function App() {
   return (
     <div className="App">
             
-      <div className='header'>
-        <img src={'logoNname.png'} className="logo" alt='logo' />
-      </div>
+      <Header/>
 
       <div className="flex-container">
 

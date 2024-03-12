@@ -12,7 +12,8 @@
   box-sizing: border-box;
   gap: 4px;
   align-items: flex-start;
-
+  background: url('../background.png');
+  
   /* & > div:first-child {
     font-size: 11px;
     margin-top: -1.4rem;
@@ -38,5 +39,5 @@
 
 .window__actions {
   display: flex;
-  gap: 2px;
+  gap: 3px;
 }

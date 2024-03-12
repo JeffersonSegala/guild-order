@@ -1,0 +1,10 @@
+.header {
+    padding-bottom: 20px;
+    color: #06d1f5;
+    font-size: 24px;
+}
+
+.logo {
+    width: 140px;
+    pointer-events: none;
+}

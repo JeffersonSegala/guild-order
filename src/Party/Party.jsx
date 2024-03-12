@@ -18,14 +18,6 @@ const Party = ({ party, players, userKey, admins }) => {
   const [service, setService] = useState(false);
   const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
 
-  const addPartyMember = () => {
-    if (!memberName.trim('') || partyMembers.find(pm => pm.name.toLowerCase() === memberName.toLowerCase().trim(''))) return;
-
-    createRecord('party_member', { partyId: party.id, name: memberName.trim(''), service: service, userkey: userKey });
-    setMemberName('')
-    setService(false)
-  }
-
   const buildTitle = () => {
     let title = party.name
     if (party.size) {
@@ -74,15 +66,11 @@ const Party = ({ party, players, userKey, admins }) => {
   const buildSlot = (guildMember, partyMember) => {
     if (!guildMember?.vocation) return 'ops';
 
-    
-
     if (party.size) {
       count++
       if (count > party.size) {
         return 'reserva'
       }
-    } else if (partyMember.service) {
-      return <><img src={'greenBp.gif'} className="party__icon" alt="img" />me carrega</>
     } else if (party.qtEk && guildMember.vocation.includes('Knight')) {
       countEk++
       if (countEk <= party.qtEk) {
@@ -107,6 +95,14 @@ const Party = ({ party, players, userKey, admins }) => {
     }
   }
 
+  const addPartyMember = () => {
+    if (!memberName.trim('') || partyMembers.find(pm => pm.name.toLowerCase() === memberName.toLowerCase().trim(''))) return;
+
+    createRecord('party_member', { partyId: party.id, name: memberName.trim(''), service: service, userkey: userKey });
+    setMemberName('')
+    setService(false)
+  }
+
   const closeDelete = (success) => {
     setOpenDelete(false)
     if (success) setShowMessage(true)
@@ -118,7 +114,7 @@ const Party = ({ party, players, userKey, admins }) => {
         onClose={hasPermission(party.userkey) ? () => setOpenDelete(true) : null} 
         onEdit={hasPermission(party.userkey) ? handleOpenEdit : null} >
 
-        {partyMembers?.map((partyMember, index) => {
+        {partyMembers?.filter(partyMember => !partyMember.service).map((partyMember, index) => {
           return (
             <div className="flexRow" key={partyMember.id}>
               {buildPartyMember(partyMember)}
@@ -126,13 +122,29 @@ const Party = ({ party, players, userKey, admins }) => {
           )
         })}
 
+        {partyMembers?.filter(partyMember => partyMember.service).map((partyMember, index) => {
+          return (
+            <>
+              {index === 0 && 
+                <div className='service'>
+                  <img src={'greenBp.gif'} className="party__icon" alt="img" /> Abaixo precisam do Service <img src={'greenBp.gif'} className="party__icon" alt="img" />
+                </div>
+              }
+              <div className="flexRow" key={partyMember.id}>
+                {buildPartyMember(partyMember)}
+              </div>
+            </>
+          )
+        })}
+
         <div className="flexRow">
           <input value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder='Adicionar membro' />
+          <button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
           <Toggle 
             checked={service}
             onChange={() => setService(service => !service)}
             title={'Preciso do Service'} />
-          <button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
+            <div className="flexRow" style={{color: service ? 'green' : 'gray'}}>Service</div>
         </div>
         
       </Window>
