@@ -15,6 +15,7 @@ const OnlineMembers = ({ members }) => {
 
   return (
     <Window title={'Membros Online'} isOpen={true} >
+      {members.length == 0 && 'Carregando'}
       {onlineMembersByLevel()?.map(member => {
         return (
           <GuildMember member={member} key={member.name} />        
