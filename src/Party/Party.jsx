@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import './style.css';
 import { query } from 'thin-backend';
 import { useQuery } from 'thin-backend-react';
@@ -124,16 +124,16 @@ const Party = ({ party, players, userKey, admins }) => {
 
         {partyMembers?.filter(partyMember => partyMember.service).map((partyMember, index) => {
           return (
-            <>
+            <Fragment key={partyMember.id}>
               {index === 0 && 
                 <div className='service'>
                   <img src={'greenBp.gif'} className="party__icon" alt="img" /> Abaixo precisam do Service <img src={'greenBp.gif'} className="party__icon" alt="img" />
                 </div>
               }
-              <div className="flexRow" key={partyMember.id}>
+              <div className="flexRow" >
                 {buildPartyMember(partyMember)}
               </div>
-            </>
+            </Fragment>
           )
         })}
 

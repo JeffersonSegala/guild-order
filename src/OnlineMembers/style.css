@@ -1,0 +1,12 @@
+.onlineMember {
+    display: flex;
+    align-items: center;
+}
+
+span {
+    color: #949494;
+}
+
+.sharingIcon {
+    padding-left: 2px;
+}
