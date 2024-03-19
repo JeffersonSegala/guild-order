@@ -43,11 +43,16 @@ const Party = ({ party, players, userKey, admins }) => {
     return {name: name, status: 'offline', vocation: 'Undefined', level: '?' };
   }
 
+  const dateTimeFormat = (dateTime) => {
+    const date = new Date(dateTime)
+    return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString()
+  }
+
   const buildPartyMember = (partyMember) => {
     const player = getPlayer(partyMember.name);
     
     return (<>
-      <GuildMember member={player} />
+      <GuildMember member={player} hint={dateTimeFormat(partyMember.createdAt)} />
             
       {hasPermission(partyMember.userkey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
@@ -112,7 +117,8 @@ const Party = ({ party, players, userKey, admins }) => {
     <>
       <Window title={buildTitle()} id={party.name} 
         onClose={hasPermission(party.userkey) ? () => setOpenDelete(true) : null} 
-        onEdit={hasPermission(party.userkey) ? handleOpenEdit : null} >
+        onEdit={hasPermission(party.userkey) ? handleOpenEdit : null}
+        hint={dateTimeFormat(party.createdAt)} >
 
         {partyMembers?.filter(partyMember => !partyMember.service).map((partyMember, index) => {
           return (
