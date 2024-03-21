@@ -47,7 +47,7 @@ const Party = ({ party, players, userKey, admins }) => {
 
   const dateTimeFormat = (dateTime) => {
     const date = new Date(dateTime)
-    return date.toLocaleDateString() + ' - ' + date.toLocaleTimeString()
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString()
   }
 
   const buildPartyMember = (partyMember) => {
@@ -121,6 +121,10 @@ const Party = ({ party, players, userKey, admins }) => {
         onClose={hasPermission(party.userkey) ? () => setOpenDelete(true) : null} 
         onEdit={hasPermission(party.userkey) ? handleOpenEdit : null}
         hint={dateTimeFormat(party.createdAt)} >
+
+        <div className='description'>
+          {party.description}
+        </div>
 
         {partyMembers?.filter(partyMember => !partyMember.service).map((partyMember, index) => {
           return (
