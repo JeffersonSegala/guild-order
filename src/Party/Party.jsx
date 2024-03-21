@@ -122,7 +122,7 @@ const Party = ({ party, players, userKey, admins }) => {
         onEdit={hasPermission(party.userkey) ? handleOpenEdit : null}
         hint={dateTimeFormat(party.createdAt)} >
 
-        <div className='description'>
+        <div className='party__description'>
           {party.description}
         </div>
 
