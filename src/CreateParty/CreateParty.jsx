@@ -31,8 +31,8 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
     createRecord('party', { 
       name: name.trim(''),
       description: description,
-      eventDate: eventDate,
-      eventTime: eventTime,
+      eventDate: eventDate === '' ? null : eventDate,
+      eventTime: eventTime === '' ? null : eventTime,
       size: size === '' ? null : size, 
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 
@@ -58,8 +58,8 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
     updateRecord('party', party.id, {
       name: name.trim(''), 
       description: description,
-      eventDate: eventDate,
-      eventTime: eventTime,
+      eventDate: eventDate === '' ? null : eventDate,
+      eventTime: eventTime === '' ? null : eventTime,
       size: size === '' ? null : size, 
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 

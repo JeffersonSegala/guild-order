@@ -20,10 +20,12 @@ const Party = ({ party, players, userKey, admins }) => {
 
   const buildTitle = () => {
     let title = party.name
-    if (party.size) {
-      title = `[${partyMembers?.length}/${party.size}] ${title}`
-    } else if (party.qtEk || party.qtEd || party.qtSt) {
-      title = `[${party.qtEk ? 'EKs:' + party.qtEk: ''} ${party.qtEd ? 'EDs:' + party.qtEd: ''}${party.qtSt ? ' Shooters:' + party.qtSt : ''}] ${title}` 
+    if (party.eventDate && party.eventTime) {
+      title = `[${dateTimeFormat(party.eventDate + ' ' + party.eventTime).replace(/(.*)\D\d+/, '$1')}] ${title}`
+    } else if (party.eventDate) {
+        title = `[${new Date(party.eventDate + ' 12:00:00').toLocaleDateString()}] ${title}`
+    } else if (party.eventTime) {
+      title = `[${new Date('2024-03-03 ' + party.eventTime).toLocaleTimeString().replace(/(.*)\D\d+/, '$1')}] ${title}`
     }
     return <div>{title}</div>
   }
