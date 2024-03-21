@@ -17,6 +17,7 @@ const Party = ({ party, players, userKey, admins }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [service, setService] = useState(false);
   const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
+  const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
 
   const buildTitle = () => {
     let title = party.name
@@ -58,7 +59,7 @@ const Party = ({ party, players, userKey, admins }) => {
             
       {hasPermission(partyMember.userkey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
-      {buildSlot(player, partyMember)}
+      {buildSlot(player)}
     </>)
   }
 
@@ -70,7 +71,7 @@ const Party = ({ party, players, userKey, admins }) => {
   let countEd = 0;
   let countSt = 0;
   let count = 0;
-  const buildSlot = (guildMember, partyMember) => {
+  const buildSlot = (guildMember) => {
     if (!guildMember?.vocation) return 'ops';
 
     if (party.size) {
@@ -115,6 +116,10 @@ const Party = ({ party, players, userKey, admins }) => {
     if (success) setShowMessage(true)
   }
 
+  const sortByRank = (a, b) => {
+    return rankOrder.indexOf(getPlayer(a.name).rank) - rankOrder.indexOf(getPlayer(b.name).rank)
+  }
+
   return (
     <>
       <Window title={buildTitle()} id={party.name} 
@@ -126,13 +131,16 @@ const Party = ({ party, players, userKey, admins }) => {
           {party.description}
         </div>
 
-        {partyMembers?.filter(partyMember => !partyMember.service).map((partyMember, index) => {
-          return (
-            <div className="flexRow" key={partyMember.id}>
-              {buildPartyMember(partyMember)}
-            </div>
-          )
-        })}
+        {partyMembers?.filter(partyMember => !partyMember.service)
+          .sort(sortByRank)
+          .map((partyMember, index) => {
+            return (
+              <div className="flexRow" key={partyMember.id}>
+                {buildPartyMember(partyMember)}
+              </div>
+            )
+          })
+        }
 
         {partyMembers?.filter(partyMember => partyMember.service).map((partyMember, index) => {
           return (
