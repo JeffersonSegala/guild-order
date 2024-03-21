@@ -9,6 +9,9 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 const DeleteParty = ({ party, open, handleClose, userKey }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [name, setName] = useState(party.name || '');
+  const [description, setDescription] = useState(party.description || '');
+  const [eventDate, setEventDate] = useState(party.eventDate || '');
+  const [eventTime, setEventTime] = useState(party.eventTime || '');
   const [size, setSize] = useState(party.size || '');
   const [qtEk, setQtEk] = useState(party.qtEk || '');
   const [qtEd, setQtEd] = useState(party.qtEd || '');
@@ -20,16 +23,16 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
     } else {
       create()
     }
-
-    handleClose();
-    setShowMessage(true);
   }
 
   const create = () => {
     if (!name) return;
 
     createRecord('party', { 
-      name: name.trim(''), 
+      name: name.trim(''),
+      description: description,
+      eventDate: eventDate,
+      eventTime: eventTime,
       size: size === '' ? null : size, 
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 
@@ -37,10 +40,16 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
       userkey: userKey 
     });
     setName('')
+    setDescription('')
+    setEventDate('')
+    setEventTime('')
     setSize('')
     setQtEk('')
     setQtEd('')
     setQtSt('')
+
+    handleClose();
+    setShowMessage(true);
   }
 
   const update = () => {
@@ -48,11 +57,17 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
 
     updateRecord('party', party.id, {
       name: name.trim(''), 
+      description: description,
+      eventDate: eventDate,
+      eventTime: eventTime,
       size: size === '' ? null : size, 
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 
       qtSt: qtSt === '' ? null : qtSt, 
     })
+
+    handleClose();
+    setShowMessage(true);
   }
 
   const disableGeneric = () => {
@@ -92,23 +107,30 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
           </div>
         </div>
         <br/>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Descrição da PT ( adicione horário e informações relevantes )' />
-        <br/>
         <div className='flexRow' >
+          <input type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+          <input type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
+        </div>
+        <br/>
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Nome do evento *Obrigatório' style={{width: '100%'}} />      
+        <br/>
+        <input value={description} onChange={(e) => setDescription(e.target.value)} placeholder='Complemento' style={{width: '100%'}} />
+        <br/>
+        <div className='vocLine' >
           <img src={'Elite Knight.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={qtEk} type="number" onChange={(e) => setQtEk(e.target.value)} disabled={disableSpecific()} placeholder='EKs' />
         </div>
-        <div className='flexRow' >
+        <div className='vocLine' >
           <img src={'Elder Druid.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={qtEd} type="number" onChange={(e) => setQtEd(e.target.value)} disabled={disableSpecific()} placeholder='EDs'  />
         </div>
-        <div className='flexRow' >
+        <div className='vocLine' >
           <img src={'Royal Paladin.png'} className="vocationImage vocIcon" alt="voc" /> 
           <img src={'Master Sorcerer.png'} className="vocationImage vocIcon" alt="voc" /> 
           <input value={qtSt} type="number" onChange={(e) => setQtSt(e.target.value)} disabled={disableSpecific()}  placeholder='Shooters' />
         </div>
         <br/>
-        <div className='flexRow' >
+        <div className='vocLine' >
           <img src={'Undefined.png'} className="vocationImage vocIcon" alt="voc" style={{marginLeft: '26px'}} /> 
           <input value={size} type="number" onChange={(e) => setSize(e.target.value)} disabled={disableGeneric()} placeholder='Sem restrição' />
         </div>      
