@@ -18,6 +18,7 @@ const Party = ({ party, players, userKey, admins }) => {
   const [service, setService] = useState(false);
   const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
   const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
+  const vocOrder = ['Elite Knight', 'Elder Druid', 'Shooter'];
 
   const buildTitle = () => {
     let title = party.name
@@ -116,12 +117,23 @@ const Party = ({ party, players, userKey, admins }) => {
     if (success) setShowMessage(true)
   }
 
+  const sortByVoc = (a, b) => {
+    if (!party.qtEk && !party.qtEd && !party.qtSt) return 0
+    return vocOrder.indexOf(getPlayerVocation(a.name)) - vocOrder.indexOf(getPlayerVocation(b.name))
+  }
+
   const sortByRank = (a, b) => {
     return rankOrder.indexOf(getPlayer(a.name).rank) - rankOrder.indexOf(getPlayer(b.name).rank)
+  }
+  
+  const getPlayerVocation = (name) => {
+    const vocation = getPlayer(name).vocation
+    return vocation === 'Royal Paladin' || vocation === 'Master Sorcerer' ? 'Shooter' : vocation
   }
 
   return (
     <>
+    {console.log(partyMembers)}
       <Window title={buildTitle()} id={party.name} 
         onClose={hasPermission(party.userkey) ? () => setOpenDelete(true) : null} 
         onEdit={hasPermission(party.userkey) ? handleOpenEdit : null}
@@ -133,7 +145,8 @@ const Party = ({ party, players, userKey, admins }) => {
 
         {partyMembers?.filter(partyMember => !partyMember.service)
           .sort(sortByRank)
-          .map((partyMember, index) => {
+          .sort(sortByVoc)
+          .map((partyMember) => {
             return (
               <div className="flexRow" key={partyMember.id}>
                 {buildPartyMember(partyMember)}
