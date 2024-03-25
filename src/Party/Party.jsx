@@ -60,7 +60,7 @@ const Party = ({ party, players, userKey, admins }) => {
             
       {hasPermission(partyMember.userkey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
-      {buildSlot(player)}
+      {buildSlot(player, partyMember)}
     </>)
   }
 
@@ -72,8 +72,9 @@ const Party = ({ party, players, userKey, admins }) => {
   let countEd = 0;
   let countSt = 0;
   let count = 0;
-  const buildSlot = (guildMember) => {
+  const buildSlot = (guildMember, partyMember) => {
     if (!guildMember?.vocation) return 'ops';
+    if (partyMember.service) return '';
 
     if (party.size) {
       count++
