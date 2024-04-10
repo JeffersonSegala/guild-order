@@ -17,7 +17,7 @@ const Parties = ({ players, userKey }) => {
 
   const fetchParties = () => {
     
-    fetch('http://54.233.174.20:8080/api/v1/parties', {referrerPolicy: "unsafe-url" })
+    fetch('https://54.233.174.20:8080/api/v1/parties')
     // fetch('http://localhost:8080/api/v1/parties')
       .then(response => response.json())
       .then(data => {
