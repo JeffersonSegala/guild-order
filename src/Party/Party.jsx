@@ -16,7 +16,7 @@ const Party = ({ party, players, userKey, admins }) => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [service, setService] = useState(false);
-  const partyMembers = useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
+  const partyMembers = []//useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
   const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
   const vocOrder = ['Elite Knight', 'Elder Druid', 'Shooter'];
 
