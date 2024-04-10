@@ -8,3 +8,8 @@
     width: 140px;
     pointer-events: none;
 }
+
+.user {
+    display: flex;
+    flex-direction: row-reverse;
+}
