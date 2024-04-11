@@ -59,29 +59,8 @@ function App() {
 
         <OnlineMembers members={guild} />
 
-
         <Window title={'AVISO'} isOpen={true} >
-          Devido a problemas com nosso serviço atual que não tem previsão de retorno, estamos desenvolvendo novo banco de dados na AWS, agradecemos a compreensão.
-        </Window>
-
-        <Window title={'[10/04/2024 - 19:30] - GT Final HOJE'} isOpen={true} >
-          <div style={{textAlign: 'justify'}} >
-          ⚔ EK Bepe ferobra <br/>
-          ⚔ EK Qwene <br/>
-          ⚔ EK Lucreria <br/>
-          🧙‍♂ ED Vollcom kawano <br/>
-          🧙‍♂ ED Bechin <br/>
-          🧙‍♂ ED kommandeer <br/>
-          🏹🪄 Wolla har RP <br/>
-          🏹🪄 Lord leoozin MS <br/>
-          🏹🪄 Arqueiro Brizado <br/>
-          🏹🪄 Bucetinha <br/>
-          🏹🪄 Baiano Supremo  <br/>
-          🏹🪄 Rapoza Estelar <br/>
-          🏹🪄 Noseout <br/>
-          🏹🪄 miconruyel rodrain  <br/>
-          🏹🪄 Apollo Rampage <br/>
-          </div>
+          Serviço migrado com sucesso! Ainda estão sendo feitos ajustes finais, qualquer problema avisem por favor s2
         </Window>
 
         <Parties players={guild.concat(united)} user={user} />   
