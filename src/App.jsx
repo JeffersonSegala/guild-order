@@ -9,6 +9,7 @@ import Constants from './Constants';
 function App() {
   const [guild, setGuild] = useState([]);
   const [united, setUnited] = useState([]);
+  const [lsUserKey, setLsUserKey] = useState('');
   const [user, setUser] = useState('');
 
   useEffect(() => {
@@ -42,6 +43,7 @@ function App() {
       lsUserKey = new Date().getTime();
       localStorage.setItem("userKey", lsUserKey)
     }
+    setLsUserKey(lsUserKey)
 
     fetch(Constants.API_URL + '/user/' + lsUserKey)
       .then(response => response.json())
@@ -53,7 +55,7 @@ function App() {
   return (
     <div className="App">
             
-      <Header user={user} />
+      <Header lsUserKey={lsUserKey} />
 
       <div className="flex-container">
 

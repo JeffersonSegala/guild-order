@@ -1,11 +1,11 @@
 import './style.css';
 
-const Header = ({user}) => {
+const Header = ({lsUserKey}) => {
  
   return (
     <>
     <div className='user'>
-      {user.userKey}
+      {lsUserKey}
     </div>
     <div className='header'>
       <img src={'logoNname.webp'} className="logo" alt='logo' />
