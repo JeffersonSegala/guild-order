@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import { query } from 'thin-backend';
-import { useQuery } from 'thin-backend-react';
 import Party from './Party';
 import CreateParty from '../CreateParty/CreateParty';
+import Constants from '../Constants';
 
-const Parties = ({ players, userKey }) => {
+const Parties = ({ players, user }) => {
   const [openCreate, setOpenCreate] = useState(false);
-  const parties = []//useQuery(query('party').orderByDesc('id'));
-  const admins = []//useQuery(query('admin').orderByDesc('id'));
+  const [parties, setParties] = useState([]);
 
   useEffect(() => {
     fetchParties();
-    setInterval(fetchParties, 60000);
   }, []);
 
   const fetchParties = () => {
-    
-    fetch('https://54.233.174.20:8080/api/v1/parties')
-    // fetch('http://localhost:8080/api/v1/parties')
+    console.log('fetching')
+    fetch(Constants.API_URL + '/parties')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        // setGuild(data.guild.members)
+        setParties(data)
     });
+  }
+
+  const handleCloseCreateParty = () => {
+    setOpenCreate(false);
+    fetchParties();
   }
 
   return (
     <>
       {parties?.sort((a, b) => a.name.localeCompare(b.name)).map(party => {
         return (
-          <Party party={party} players={players} userKey={userKey} admins={admins} key={party.id} />
+          <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
         )
       })}
 
-      <CreateParty party={{}} userKey={userKey} open={openCreate} handleClose={() => setOpenCreate(false)} />
+      <CreateParty party={{}} userKey={user.userKey} open={openCreate} handleClose={handleCloseCreateParty} />
 
-      {/* <button onClick={() => setOpenCreate(true)}><img src={'runeConvince.gif'} className="deleteParty__icon" alt="voc" />Criar Evento/PT</button> */}
+      <button onClick={() => setOpenCreate(true)}><img src={'runeConvince.gif'} className="deleteParty__icon" alt="voc" />Criar Evento/PT</button>
     </>
   )
 

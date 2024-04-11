@@ -2,15 +2,18 @@ import './style.css';
 import { Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React from 'react';
-import { deleteRecord } from 'thin-backend';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import axios from 'axios';
+import Constants from '../Constants';
 
 const DeleteParty = ({ party, open, handleClose }) => {
 
   const handleDelete = () => {
-    deleteRecord('party', party.id)
-    
-    handleClose(true);
+    axios.delete(Constants.API_URL + '/party/' + party.id)
+        .then(response => {
+          console.log(response)
+          handleClose(true);
+        });  
   }
 
   const style = {

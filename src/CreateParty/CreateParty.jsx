@@ -2,9 +2,10 @@ import './style.css';
 import { Box, Snackbar } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
-import { createRecord } from 'thin-backend';
 import { updateRecord } from 'thin-backend';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import Constants from '../Constants';
+import axios from 'axios';
 
 const DeleteParty = ({ party, open, handleClose, userKey }) => {
   const [showMessage, setShowMessage] = useState(false);
@@ -28,7 +29,7 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
   const create = () => {
     if (!name) return;
 
-    createRecord('party', { 
+    const newParty = { 
       name: name.trim(''),
       description: description,
       eventDate: eventDate === '' ? null : eventDate,
@@ -37,8 +38,17 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 
       qtSt: qtSt === '' ? null : qtSt,
-      userkey: userKey 
-    });
+      user: {userKey: userKey},
+    }
+
+    axios.post(Constants.API_URL + '/party', newParty)
+        .then(response => {
+          console.log(response)
+          handleClose();
+          setShowMessage(true);
+        });
+
+
     setName('')
     setDescription('')
     setEventDate('')
@@ -47,15 +57,12 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
     setQtEk('')
     setQtEd('')
     setQtSt('')
-
-    handleClose();
-    setShowMessage(true);
   }
 
   const update = () => {
     if (!name) return;
 
-    updateRecord('party', party.id, {
+    const updateParty = {
       name: name.trim(''), 
       description: description,
       eventDate: eventDate === '' ? null : eventDate,
@@ -64,10 +71,14 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
       qtEk: qtEk === '' ? null : qtEk, 
       qtEd: qtEd === '' ? null : qtEd, 
       qtSt: qtSt === '' ? null : qtSt, 
-    })
+    }
 
-    handleClose();
-    setShowMessage(true);
+    axios.put(Constants.API_URL + '/party/' + party.id, updateParty)
+        .then(response => {
+          console.log(response)
+          handleClose();
+          setShowMessage(true);
+        });
   }
 
   const disableGeneric = () => {
@@ -137,7 +148,7 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
         <br/>
 
         <div className='flexColumn'>
-          <button onClick={handleSave} ><img src={'runeUH.gif'} className="deleteParty__icon" alt="voc" />Salvar</button> 
+          <button onClick={handleSave} ><img src={'runeUH.gif'} className="deleteParty__icon" alt="save" />Salvar</button> 
         </div>
       </Box>
     </Modal>

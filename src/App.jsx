@@ -4,11 +4,12 @@ import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Parties from './Party/Parties';
 import Header from './Components/Header/Header';
 import Window from './Window/Window';
+import Constants from './Constants';
 
 function App() {
   const [guild, setGuild] = useState([]);
   const [united, setUnited] = useState([]);
-  const [userKey, setUserKey] = useState('');
+  const [user, setUser] = useState('');
 
   useEffect(() => {
     fetchOrder();
@@ -16,12 +17,7 @@ function App() {
 
     fetchUnited();
 
-    let lsUserKey = localStorage.getItem("userKey");
-    if (!lsUserKey) {
-      lsUserKey = new Date().getTime();
-      localStorage.setItem("userKey", lsUserKey)
-    }
-    setUserKey(lsUserKey)
+    fetchUser();
   }, []);
 
   const fetchOrder = () => {
@@ -39,11 +35,25 @@ function App() {
         setUnited(data.guild.members)
     });
   }
+
+  const fetchUser = () => {
+    let lsUserKey = localStorage.getItem("userKey");
+    if (!lsUserKey) {
+      lsUserKey = new Date().getTime();
+      localStorage.setItem("userKey", lsUserKey)
+    }
+
+    fetch(Constants.API_URL + '/user/' + lsUserKey)
+      .then(response => response.json())
+      .then(data => {
+        setUser(data)
+    });
+  }
   
   return (
     <div className="App">
             
-      <Header userKey={userKey} />
+      <Header user={user} />
 
       <div className="flex-container">
 
@@ -74,7 +84,7 @@ function App() {
           </div>
         </Window>
 
-        <Parties players={guild.concat(united)} userKey={userKey} />   
+        <Parties players={guild.concat(united)} user={user} />   
        
       </div>
 

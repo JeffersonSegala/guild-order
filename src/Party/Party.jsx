@@ -1,24 +1,36 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import './style.css';
-import { query } from 'thin-backend';
-import { useQuery } from 'thin-backend-react';
-import { createRecord, deleteRecord } from 'thin-backend';
 import Window from '../Window/Window';
 import CreateParty from '../CreateParty/CreateParty';
 import GuildMember from '../GuildMember/GuildMember';
 import Toggle from '../Toggle/Toggle';
 import DeleteParty from '../DeleteParty/DeleteParty';
 import { Snackbar } from '@mui/material';
+import axios from 'axios';
+import Constants from '../Constants';
 
-const Party = ({ party, players, userKey, admins }) => {
+const Party = ({ party, players, user, fetchParties }) => {
   const [showMessage, setShowMessage] = useState(false);
   const [memberName, setMemberName] = useState('');
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [service, setService] = useState(false);
-  const partyMembers = []//useQuery(query('party_member').filterWhere('partyId', party.id).orderByAsc('createdAt'));
+  const [partyMembers, setPartyMembers] = useState([]);
+
   const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
   const vocOrder = ['Elite Knight', 'Elder Druid', 'Shooter'];
+
+  useEffect(() => {
+    fetchPartyMembers();
+  }, []);
+
+  const fetchPartyMembers = () => {
+    fetch(Constants.API_URL + '/partyMembers/' + party.id)
+      .then(response => response.json())
+      .then(data => {
+        setPartyMembers(data)
+    });
+  }
 
   const buildTitle = () => {
     let title = party.name
@@ -33,7 +45,7 @@ const Party = ({ party, players, userKey, admins }) => {
   }
 
   const handleOpenEdit = () => {
-    if (hasPermission(party.userkey)) {
+    if (hasPermission(party.user.userKey)) {
       setOpenEdit(true)
     }
   }
@@ -58,14 +70,22 @@ const Party = ({ party, players, userKey, admins }) => {
     return (<>
       <GuildMember member={player} hint={dateTimeFormat(partyMember.createdAt)} />
             
-      {hasPermission(partyMember.userkey) ? <button onClick={() => deleteRecord('party_member', partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
+      {hasPermission(partyMember.user.userKey) ? <button onClick={() => deletePartyMember(partyMember.id)}> &nbsp;X&nbsp; </button> : ''}
     
       {buildSlot(player, partyMember)}
     </>)
   }
 
+  const deletePartyMember = (partyMemberId) => {
+    axios.delete(Constants.API_URL + '/partyMembers/' + partyMemberId)
+        .then(response => {
+          console.log(response)
+          fetchPartyMembers();
+        });
+  }
+
   const hasPermission = (itemUserKey) => {
-    return itemUserKey === userKey || admins?.find(admin => admin.userkey === userKey)
+    return itemUserKey === user.userKey || user.admin
   }
 
   let countEk = 0;
@@ -108,7 +128,18 @@ const Party = ({ party, players, userKey, admins }) => {
   const addPartyMember = () => {
     if (!memberName.trim('') || partyMembers.find(pm => pm.name.toLowerCase() === memberName.toLowerCase().trim(''))) return;
 
-    createRecord('party_member', { partyId: party.id, name: memberName.trim(''), service: service, userkey: userKey });
+    const newPartymember = { 
+      party: {id: party.id},
+      name: memberName.trim(''), 
+      service: service, 
+      user: {userKey: user.userKey}
+    }
+
+    axios.post(Constants.API_URL + '/partyMember', newPartymember)
+      .then(response => {
+        fetchPartyMembers();
+      });
+    
     setMemberName('')
     setService(false)
   }
@@ -116,6 +147,7 @@ const Party = ({ party, players, userKey, admins }) => {
   const closeDelete = (success) => {
     setOpenDelete(false)
     if (success) setShowMessage(true)
+    fetchParties();
   }
 
   const sortByVoc = (a, b) => {
@@ -134,10 +166,9 @@ const Party = ({ party, players, userKey, admins }) => {
 
   return (
     <>
-    {console.log(partyMembers)}
       <Window title={buildTitle()} id={party.name} 
-        onClose={hasPermission(party.userkey) ? () => setOpenDelete(true) : null} 
-        onEdit={hasPermission(party.userkey) ? handleOpenEdit : null}
+        onClose={hasPermission(party.user.userKey) ? () => setOpenDelete(true) : null} 
+        onEdit={hasPermission(party.user.userKey) ? handleOpenEdit : null}
         hint={dateTimeFormat(party.createdAt)} >
 
         <div className='party__description'>
