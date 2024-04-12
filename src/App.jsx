@@ -55,7 +55,7 @@ function App() {
   return (
     <div className="App">
             
-      <Header lsUserKey={lsUserKey} />
+      <Header lsUserKey={lsUserKey} user={user} />
 
       <div className="flex-container">
 
