@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Parties from './Party/Parties';
 import Header from './Components/Header/Header';
-import Window from './Window/Window';
 import Constants from './Constants';
 
 function App() {
@@ -60,10 +59,6 @@ function App() {
       <div className="flex-container">
 
         <OnlineMembers members={guild} />
-
-        <Window title={'AVISO'} isOpen={true} >
-          Serviço migrado com sucesso! Ainda estão sendo feitos ajustes finais, qualquer problema avisem por favor s2
-        </Window>
 
         <Parties players={guild.concat(united)} user={user} />   
        

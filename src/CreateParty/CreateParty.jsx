@@ -2,7 +2,6 @@ import './style.css';
 import { Box, Snackbar } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import React, { useState } from 'react';
-import { updateRecord } from 'thin-backend';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import Constants from '../Constants';
 import axios from 'axios';
@@ -76,8 +75,8 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
     axios.put(Constants.API_URL + '/party/' + party.id, updateParty)
         .then(response => {
           console.log(response)
-          handleClose();
           setShowMessage(true);
+          handleClose(true);
         });
   }
 
@@ -107,14 +106,14 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
 
   return (
     <>
-    <Modal open={open} onClose={handleClose} >
+    <Modal open={open} onClose={() => handleClose(false)} >
        
       <Box sx={style}>
       
         <div className='send-header-container'>
           <div>&nbsp;</div>
           <div>
-            <CloseOutlinedIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
+            <CloseOutlinedIcon onClick={() => handleClose(false)} style={{ cursor: 'pointer' }} />
           </div>
         </div>
         <br/>

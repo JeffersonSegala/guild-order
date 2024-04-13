@@ -85,7 +85,7 @@ const Party = ({ party, players, user, fetchParties }) => {
   }
 
   const hasPermission = (itemUserKey) => {
-    return itemUserKey === user.userKey || user.admin
+    return itemUserKey === user.userKey || user.logout
   }
 
   let countEk = 0;
@@ -146,6 +146,12 @@ const Party = ({ party, players, user, fetchParties }) => {
 
   const closeDelete = (success) => {
     setOpenDelete(false)
+    if (success) setShowMessage(true)
+    fetchParties();
+  }
+
+  const closeCreate = (success) => {
+    setOpenEdit(false)
     if (success) setShowMessage(true)
     fetchParties();
   }
@@ -216,7 +222,7 @@ const Party = ({ party, players, user, fetchParties }) => {
 
       <DeleteParty party={party} open={openDelete} handleClose={closeDelete} />
 
-      <CreateParty party={party} open={openEdit} handleClose={() => setOpenEdit(false)} />
+      <CreateParty party={party} open={openEdit} handleClose={closeCreate} />
 
       <Snackbar
         open={showMessage}

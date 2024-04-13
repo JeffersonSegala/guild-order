@@ -33,14 +33,14 @@ const DeleteParty = ({ party, open, handleClose }) => {
   };
   
   return (
-    <Modal open={open} onClose={handleClose} >
+    <Modal open={open} onClose={() => handleClose(false)} >
        
       <Box sx={style}>
       
         <div className='send-header-container'>
           <div>&nbsp;</div>
           <div>
-            <CloseOutlinedIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
+            <CloseOutlinedIcon onClick={() => handleClose(false)} style={{ cursor: 'pointer' }} />
           </div>
         </div>
         <br/>
@@ -50,7 +50,7 @@ const DeleteParty = ({ party, open, handleClose }) => {
         <br/>
 
         <div className='deleteParty__buttons'>
-          <button onClick={handleClose} ><img src={'runeUH.gif'} className="deleteParty__icon" alt="voc" />Cancelar</button> 
+          <button onClick={() => handleClose(false)} ><img src={'runeUH.gif'} className="deleteParty__icon" alt="voc" />Cancelar</button> 
           <button onClick={handleDelete} ><img src={'runeSD.gif'} className="deleteParty__icon" alt="voc" />Excluir</button> 
         </div>
       </Box>
