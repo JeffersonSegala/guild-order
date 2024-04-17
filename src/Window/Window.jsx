@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.css';
 
-const Window = ({ children, title, id, isOpen, onClose, onEdit, hint }) => {
+const Window = ({ children, title, id, isOpen, onClose, onEdit, hint, onOpen }) => {
   const [open, setOpen] = useState(isOpen)
   
+  
+  useEffect(() => {
+    if (open && onOpen) {
+      onOpen();
+    }
+  }, [open]);
+
   return (
     <div className="window" id={id} >
       <div className='window__headers'>

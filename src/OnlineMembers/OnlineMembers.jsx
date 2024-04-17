@@ -23,7 +23,7 @@ const OnlineMembers = ({ members }) => {
 
   return (
     <Window title={'Membros Online'} isOpen={true} >
-      {members.length === 0 && 'Carregando'}
+      {members.length === 0 && 'carregando...'}
       {onlineMembersByLevel()?.map(member => {
         return (
           <div className='onlineMember' key={member.name} >

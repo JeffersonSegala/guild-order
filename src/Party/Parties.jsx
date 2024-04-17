@@ -36,7 +36,10 @@ const Parties = ({ players, user }) => {
 
       <CreateParty party={{}} userKey={user.userKey} open={openCreate} handleClose={handleCloseCreateParty} />
 
-      <button onClick={() => setOpenCreate(true)}><img src={'runeConvince.gif'} className="deleteParty__icon" alt="voc" />Criar Evento/PT</button>
+      <button onClick={() => setOpenCreate(true)}>
+        <img src={'runeConvince.gif'} className="deleteParty__icon" alt="voc" />
+        Criar Evento/PT
+      </button>
     </>
   )
 

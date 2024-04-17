@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import './style.css';
 import Window from '../Window/Window';
 import CreateParty from '../CreateParty/CreateParty';
@@ -16,19 +16,18 @@ const Party = ({ party, players, user, fetchParties }) => {
   const [openDelete, setOpenDelete] = useState(false);
   const [service, setService] = useState(false);
   const [partyMembers, setPartyMembers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
   const vocOrder = ['Elite Knight', 'Elder Druid', 'Shooter'];
 
-  useEffect(() => {
-    fetchPartyMembers();
-  }, []);
-
   const fetchPartyMembers = () => {
+    setLoading(true)
     fetch(Constants.API_URL + '/partyMembers/' + party.id)
       .then(response => response.json())
       .then(data => {
         setPartyMembers(data)
+        setLoading(false)
     });
   }
 
@@ -173,13 +172,16 @@ const Party = ({ party, players, user, fetchParties }) => {
   return (
     <>
       <Window title={buildTitle()} id={party.name} 
-        onClose={hasPermission(party.user.userKey) ? () => setOpenDelete(true) : null} 
-        onEdit={hasPermission(party.user.userKey) ? handleOpenEdit : null}
-        hint={dateTimeFormat(party.createdAt)} >
+              onClose={hasPermission(party.user.userKey) ? () => setOpenDelete(true) : null} 
+              onEdit={hasPermission(party.user.userKey) ? handleOpenEdit : null}
+              hint={dateTimeFormat(party.createdAt)} 
+              onOpen={fetchPartyMembers}>
 
         <div className='party__description'>
           {party.description}
         </div>
+
+        {loading && 'carregando...'}
 
         {partyMembers?.filter(partyMember => !partyMember.service)
           .sort(sortByRank)
