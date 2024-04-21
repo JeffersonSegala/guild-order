@@ -14,7 +14,6 @@ const Party = ({ party, players, user, fetchParties }) => {
   const [memberName, setMemberName] = useState('');
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [service, setService] = useState(false);
   const [partyMembers, setPartyMembers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -93,7 +92,6 @@ const Party = ({ party, players, user, fetchParties }) => {
   let count = 0;
   const buildSlot = (guildMember, partyMember) => {
     if (!guildMember?.vocation) return 'ops';
-    if (partyMember.service) return '';
 
     if (party.size) {
       count++
@@ -130,7 +128,6 @@ const Party = ({ party, players, user, fetchParties }) => {
     const newPartymember = { 
       party: {id: party.id},
       name: memberName.trim(''), 
-      service: service, 
       user: {userKey: user.userKey}
     }
 
@@ -140,7 +137,6 @@ const Party = ({ party, players, user, fetchParties }) => {
       });
     
     setMemberName('')
-    setService(false)
   }
 
   const closeDelete = (success) => {
@@ -183,7 +179,7 @@ const Party = ({ party, players, user, fetchParties }) => {
 
         {loading && 'carregando...'}
 
-        {partyMembers?.filter(partyMember => !partyMember.service)
+        {partyMembers
           .sort(sortByRank)
           .sort(sortByVoc)
           .map((partyMember) => {
@@ -195,29 +191,9 @@ const Party = ({ party, players, user, fetchParties }) => {
           })
         }
 
-        {partyMembers?.filter(partyMember => partyMember.service).map((partyMember, index) => {
-          return (
-            <Fragment key={partyMember.id}>
-              {index === 0 && 
-                <div className='service'>
-                  <img src={'greenBp.gif'} className="party__icon" alt="img" /> Abaixo precisam do Service <img src={'greenBp.gif'} className="party__icon" alt="img" />
-                </div>
-              }
-              <div className="flexRow" >
-                {buildPartyMember(partyMember)}
-              </div>
-            </Fragment>
-          )
-        })}
-
         <div className="flexRow">
           <input value={memberName} onChange={(e) => setMemberName(e.target.value)} placeholder='Adicionar membro' />
           <button onClick={addPartyMember}> &nbsp;+&nbsp; </button>
-          <Toggle 
-            checked={service}
-            onChange={() => setService(service => !service)}
-            title={'Preciso do Service'} />
-            <div className="flexRow" style={{color: service ? 'green' : 'gray'}}>Service</div>
         </div>
         
       </Window>
