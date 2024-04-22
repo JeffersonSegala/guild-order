@@ -9,7 +9,7 @@ import axios from 'axios';
 import Constants from '../Constants';
 
 const Party = ({ party, players, user, fetchParties }) => {
-  const [showMessage, setShowMessage] = useState(false);
+  const [showMessage, setShowMessage] = useState('');
   const [memberName, setMemberName] = useState('');
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -139,13 +139,13 @@ const Party = ({ party, players, user, fetchParties }) => {
 
   const closeDelete = (success) => {
     setOpenDelete(false)
-    if (success) setShowMessage(true)
+    if (success) setShowMessage("Sucesso")
     fetchParties();
   }
 
   const closeCreate = (success) => {
     setOpenEdit(false)
-    if (success) setShowMessage(true)
+    if (success) setShowMessage("Sucesso")
     fetchParties();
   }
 
@@ -168,6 +168,7 @@ const Party = ({ party, players, user, fetchParties }) => {
       .then(response => response.text())
       .then(data => {
         navigator.clipboard.writeText(data)
+        setShowMessage('Copiado')
     });
   }
 
@@ -212,8 +213,8 @@ const Party = ({ party, players, user, fetchParties }) => {
       <Snackbar
         open={showMessage}
         autoHideDuration={3000}
-        onClose={() => setShowMessage(false)}
-        message="Sucesso"
+        onClose={() => setShowMessage('')}
+        message={showMessage}
         action={<></>}
       />
     </>

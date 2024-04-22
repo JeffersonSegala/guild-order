@@ -116,8 +116,8 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
         </div>
         <br/>
         <div className='flexRow' >
-          <input type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
-          <input type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
+          Dia:<input type="date" value={eventDate} onChange={(e) => setEventDate(e.target.value)} />
+          Hora:<input type="time" value={eventTime} onChange={(e) => setEventTime(e.target.value)} />
         </div>
         <br/>
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder='Nome do evento *Obrigatório' style={{width: '100%'}} />      
