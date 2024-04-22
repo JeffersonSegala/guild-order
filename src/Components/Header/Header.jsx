@@ -17,14 +17,14 @@ const Header = ({lsUserKey, user}) => {
       {lsUserKey+'.'+ (user?.id||'?') + (user.logout ? '.ADM' : '')}
     </div>
     <div className='header'>
-      <div>
-
+      <div className='rules'>
+        {user.logout && <img src={'secretInstruction.gif'} title="Regras/Infos" />}
       </div>
       <div>
         <img src={'logoNname.webp'} className="logo" alt='logo' />
       </div>
       <div className='rules'>
-        {user.logout && <img src={'letter.gif'} onClick={shareParties}/>}
+        {user.logout && <img src={'letter.gif'} onClick={shareParties} title="Copiar eventos" />}
       </div>
     </div>
     </>
