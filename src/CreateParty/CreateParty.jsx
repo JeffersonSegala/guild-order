@@ -42,7 +42,6 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
 
     axios.post(Constants.API_URL + '/party', newParty)
         .then(response => {
-          console.log(response)
           handleClose();
           setShowMessage(true);
         });
@@ -74,7 +73,6 @@ const DeleteParty = ({ party, open, handleClose, userKey }) => {
 
     axios.put(Constants.API_URL + '/party/' + party.id, updateParty)
         .then(response => {
-          console.log(response)
           setShowMessage(true);
           handleClose(true);
         });

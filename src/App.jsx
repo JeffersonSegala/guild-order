@@ -15,7 +15,7 @@ function App() {
     fetchOrder();
     setInterval(fetchOrder, 60000);
 
-    fetchUnited();
+    // fetchUnited();
 
     fetchUser();
   }, []);

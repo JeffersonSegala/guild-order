@@ -11,7 +11,6 @@ const DeleteParty = ({ party, open, handleClose }) => {
   const handleDelete = () => {
     axios.delete(Constants.API_URL + '/party/' + party.id)
         .then(response => {
-          console.log(response)
           handleClose(true);
         });  
   }

@@ -13,7 +13,6 @@ const Parties = ({ players, user }) => {
   }, []);
 
   const fetchParties = () => {
-    console.log('fetching')
     fetch(Constants.API_URL + '/parties')
       .then(response => response.json())
       .then(data => {
@@ -28,7 +27,7 @@ const Parties = ({ players, user }) => {
 
   return (
     <>
-      {parties?.sort((a, b) => a.name.localeCompare(b.name)).map(party => {
+      {parties?.map(party => {
         return (
           <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
         )

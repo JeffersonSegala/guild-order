@@ -2,6 +2,9 @@
     padding-bottom: 20px;
     color: #06d1f5;
     font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .logo {
@@ -14,4 +17,8 @@
     flex-direction: row-reverse;
     color: #000;
     color: rgba(0, 0, 0, 0.1);
+}
+
+.rules {
+    cursor: pointer;
 }

@@ -43,5 +43,7 @@
 }
 
 .window__pointer {
+  display: flex;
+  gap: 3px;
   cursor: pointer;
 }

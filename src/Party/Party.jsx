@@ -3,7 +3,6 @@ import './style.css';
 import Window from '../Window/Window';
 import CreateParty from '../CreateParty/CreateParty';
 import GuildMember from '../GuildMember/GuildMember';
-import Toggle from '../Toggle/Toggle';
 import DeleteParty from '../DeleteParty/DeleteParty';
 import { Snackbar } from '@mui/material';
 import axios from 'axios';
@@ -77,7 +76,6 @@ const Party = ({ party, players, user, fetchParties }) => {
   const deletePartyMember = (partyMemberId) => {
     axios.delete(Constants.API_URL + '/partyMembers/' + partyMemberId)
         .then(response => {
-          console.log(response)
           fetchPartyMembers();
         });
   }
@@ -165,13 +163,22 @@ const Party = ({ party, players, user, fetchParties }) => {
     return vocation === 'Royal Paladin' || vocation === 'Master Sorcerer' ? 'Shooter' : vocation
   }
 
+  const copyParty = () => {
+    fetch(Constants.API_URL + '/party/share/' + party.id)
+      .then(response => response.text())
+      .then(data => {
+        navigator.clipboard.writeText(data)
+    });
+  }
+
   return (
     <>
       <Window title={buildTitle()} id={party.name} 
               onClose={hasPermission(party.user.userKey) ? () => setOpenDelete(true) : null} 
               onEdit={hasPermission(party.user.userKey) ? handleOpenEdit : null}
               hint={dateTimeFormat(party.createdAt)} 
-              onOpen={fetchPartyMembers}>
+              onOpen={fetchPartyMembers}
+              onCopy={copyParty}>
 
         <div className='party__description'>
           {party.description}
