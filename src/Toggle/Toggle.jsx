@@ -16,17 +16,17 @@ const Toggle = ({ title, checked, onChange }) => {
         color: '#949494',
         transform: 'translateX(22px)',
         '& .MuiSwitch-thumb:before': {
-          backgroundImage: `url('greenBp.gif')`,
+          backgroundImage: `url('missingPiece.gif')`,
           backgroundSize: '16px'
         },
         '& + .MuiSwitch-track': {
           opacity: 1,
-          backgroundColor: checked ? '#20822a' : '#20822a',
+          backgroundColor: '#8796A5',
         },
       },
     },
     '& .MuiSwitch-thumb': {
-      backgroundColor: checked ? '#2b2d31' : '#2b2d31',
+      backgroundColor: '#2b2d31',
       width: 20,
       height: 20,
       '&::before': {
@@ -38,20 +38,20 @@ const Toggle = ({ title, checked, onChange }) => {
         top: 0,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundImage: `url('greyBp.gif')`,
+        backgroundImage: `url('missingPiece.gif')`,
         backgroundSize: '16px'
       },
     },
     '& .MuiSwitch-track': {
       opacity: 1,
-      backgroundColor: checked ? '#8796A5' : '#aab4be',
+      backgroundColor: '#20822a',
       borderRadius: 20 / 2,
     },
   }));
 
   return (
     <StyledSwitch 
-      checked={checked}
+      checked={!checked}
       onChange={onChange}
       title={title} />
   );

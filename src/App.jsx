@@ -7,15 +7,12 @@ import Constants from './Constants';
 
 function App() {
   const [guild, setGuild] = useState([]);
-  const [united, setUnited] = useState([]);
   const [lsUserKey, setLsUserKey] = useState('');
   const [user, setUser] = useState('');
 
   useEffect(() => {
     fetchOrder();
     setInterval(fetchOrder, 60000);
-
-    // fetchUnited();
 
     fetchUser();
   }, []);
@@ -25,14 +22,6 @@ function App() {
       .then(response => response.json())
       .then(data => {
         setGuild(data.guild.members)
-    });
-  }
-
-  const fetchUnited = () => {
-    fetch('https://api.tibiadata.com/v4/guild/united')
-      .then(response => response.json())
-      .then(data => {
-        setUnited(data.guild.members)
     });
   }
 
@@ -60,7 +49,7 @@ function App() {
 
         <OnlineMembers members={guild} />
 
-        <Parties players={guild.concat(united)} user={user} />   
+        <Parties players={guild} user={user} />   
        
       </div>
 

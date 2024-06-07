@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 import Window from '../Window/Window';
 import CreateParty from '../CreateParty/CreateParty';

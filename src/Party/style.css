@@ -14,3 +14,15 @@
     font-size: 11px;
     color: #DDD;
 }
+
+.flexCenter {
+    display: flex;
+    align-items: center;
+}
+
+.flexCenter div {
+    color: white;
+    background-color: #2b2d31;
+    border-radius: 5%;
+    padding: 1px 3px;
+}

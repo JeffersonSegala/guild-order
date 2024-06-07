@@ -3,10 +3,12 @@ import './style.css';
 import Party from './Party';
 import CreateParty from '../CreateParty/CreateParty';
 import Constants from '../Constants';
+import Toggle from '../Toggle/Toggle';
 
 const Parties = ({ players, user }) => {
   const [openCreate, setOpenCreate] = useState(false);
   const [parties, setParties] = useState([]);
+  const [scheduledParty, setScheduledParty] = useState(true);
 
   useEffect(() => {
     fetchParties();
@@ -27,12 +29,34 @@ const Parties = ({ players, user }) => {
 
   return (
     <>
-      {parties?.map(party => {
-        return (
-          <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
-        )
-      })}
 
+      <div className='flexCenter'>
+        <div>{scheduledParty ? 'Eventos agendados' : 'Eventos em formação'}</div>
+        <img src={scheduledParty ? 'theSupremeCube.gif' : 'theCube.gif'} alt='cube' />
+        <Toggle 
+          checked={scheduledParty}
+          onChange={() => setScheduledParty(scheduledParty => !scheduledParty)}
+          title={'Eventos agendados'} />
+      </div>
+
+      {scheduledParty ? 
+        <>
+        {parties?.filter(party => party.eventDate || party.eventTime).map(party => {
+          return (
+            <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
+          )
+        })}
+        </>
+      :
+        <>
+        {parties?.filter(party => !party.eventDate && !party.eventTime).map(party => {
+          return (
+            <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
+          )
+        })}
+        </>
+      }
+  
       <CreateParty party={{}} userKey={user.userKey} open={openCreate} handleClose={handleCloseCreateParty} />
 
       <button onClick={() => setOpenCreate(true)}>
