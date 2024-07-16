@@ -1,68 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect} from 'react';
 import './style.css';
 import Party from './Party';
-import CreateParty from '../CreateParty/CreateParty';
-import Constants from '../Constants';
-import Toggle from '../Toggle/Toggle';
 
-const Parties = ({ players, user }) => {
-  const [openCreate, setOpenCreate] = useState(false);
-  const [parties, setParties] = useState([]);
-  const [scheduledParty, setScheduledParty] = useState(true);
+const Parties = ({ players }) => {
 
   useEffect(() => {
-    fetchParties();
-  }, []);
+    parties = parties;
+  }, [players]);
 
-  const fetchParties = () => {
-    fetch(Constants.API_URL + '/parties')
-      .then(response => response.json())
-      .then(data => {
-        setParties(data)
-    });
-  }
-
-  const handleCloseCreateParty = () => {
-    setOpenCreate(false);
-    fetchParties();
-  }
+  var parties = [
+    {id: 1, name: 'GT FINAL > Ferumbras FINAL', eventDate: '17/07/2024', eventTime: '19:30', qtEk: 3, qtEd: 3, qtSt: 9, createdAt: '16/07/2024 00:00', 
+      description: 'Reunião na ENTRADA do vortex para organização das vagas. level 250+ ',
+      partyMembers: [
+        {id: 1, name: 'Bepe Ferobra'},
+        {id: 2, name: 'Bechin'},
+        {id: 3, name: 'Air Mugah'},
+      ]
+    }
+  ]
 
   return (
     <>
-
-      <div className='flexCenter'>
-        <div>{scheduledParty ? 'Eventos agendados' : 'Eventos em formação'}</div>
-        <img src={scheduledParty ? 'theSupremeCube.gif' : 'theCube.gif'} alt='cube' />
-        <Toggle 
-          checked={scheduledParty}
-          onChange={() => setScheduledParty(scheduledParty => !scheduledParty)}
-          title={'Eventos agendados'} />
-      </div>
-
-      {scheduledParty ? 
-        <>
-        {parties?.filter(party => party.eventDate || party.eventTime).map(party => {
-          return (
-            <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
-          )
-        })}
-        </>
-      :
-        <>
-        {parties?.filter(party => !party.eventDate && !party.eventTime).map(party => {
-          return (
-            <Party party={party} players={players} user={user} key={party.id} fetchParties={fetchParties} />
-          )
-        })}
-        </>
-      }
-  
-      <CreateParty party={{}} userKey={user.userKey} open={openCreate} handleClose={handleCloseCreateParty} />
-
-      <button onClick={() => setOpenCreate(true)}>
-        <img src={'runeConvince.gif'} className="deleteParty__icon" alt="voc" />
-        Criar Evento/PT
-      </button>
+    {parties?.map(party => {
+      return <Party party={party} players={players} key={party.id} />
+    })}
     </>
   )
 
