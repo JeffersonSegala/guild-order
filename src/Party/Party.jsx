@@ -89,7 +89,10 @@ const Party = ({ party, players }) => {
   }
 
   const sortByRank = (a, b) => {
-    return rankOrder.indexOf(getPlayer(a.name).rank) - rankOrder.indexOf(getPlayer(b.name).rank)
+    let byRank = rankOrder.indexOf(getPlayer(a.name).rank) - rankOrder.indexOf(getPlayer(b.name).rank)
+    if (byRank != 0) return byRank
+
+    return (getPlayer(a.name).level - getPlayer(b.name).level) * -1
   }
   
   const getPlayerVocation = (name) => {
@@ -120,11 +123,11 @@ const Party = ({ party, players }) => {
         {party.partyMembers
           .sort(sortByRank)
           .sort(sortByVoc)
-          .map((partyMember) => {
+          .map((partyMember, index) => {
             {console.log(partyMember)}
             return (
               <div className="flexRow" key={partyMember.id}>
-                {buildPartyMember(partyMember)}
+                {index+1}{buildPartyMember(partyMember)}
               </div>
             )
           })

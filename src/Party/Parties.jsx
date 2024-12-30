@@ -9,28 +9,26 @@ const Parties = ({ players }) => {
   }, [players]);
 
   var parties = [
-    {id: 1, name: 'GT FINAL > Ferumbras FINAL', eventDate: '17/07/2024', eventTime: '19:30', qtEk: 3, qtEd: 3, qtSt: 9, createdAt: '16/07/2024 00:00', 
-      description: 'Reunião na ENTRADA do vortex para organização das vagas. level 250+ ',
+    {id: 1, name: 'GT FINAL > Ferumbras FINAL', eventDate: '30/12/2024', eventTime: '19:00', qtEk: 3, qtEd: 3, qtSt: 9, createdAt: '16/07/2024 00:00', 
+      description: 'Reunião na GH - level 250+ ',
       partyMembers: [
-        {id: 1, name: 'Air Mugah'},
-        {id: 2, name: 'Parli On Three'},
-        {id: 3, name: 'Gaelbriel'},
-        {id: 4, name: 'Slavim Metiis'},
-        {id: 5, name: 'Calamity Knight'},
-        {id: 6, name: 'Red Rot'},
-        {id: 7, name: 'Benckiser'},
-        {id: 8, name: 'Wolla Har'},
-        {id: 9, name: 'Brus Morphrix'},
-        {id: 10, name: 'Scavengeer'},
-        {id: 11, name: 'Bechin'},
-        {id: 12, name: 'Lizaso'},
-        {id: 13, name: 'Nico Pally'},
-        {id: 14, name: 'Rafa Candido'},
-        {id: 15, name: 'Soares Kalidus'},
-        {id: 16, name: 'Imperius Solarion'},
-        {id: 17, name: 'Ubume San'},
-        {id: 18, name: 'Apollo Rampage'},
-        {id: 19, name: 'Andy Chinelo'}
+        {id: 1, name: 'Bepesz'},
+        {id: 2, name: 'Simprozo'},
+        {id: 3, name: 'Ssumail'},
+        {id: 4, name: 'Raposa Estelar'},
+        {id: 5, name: 'Aime Flu'},
+        {id: 6, name: 'Benckiser'},
+        {id: 7, name: 'Archimedes Arturiano'},
+        {id: 8, name: 'Guizao Inocente'},
+        {id: 9, name: 'Nuevo hogar'},
+        {id: 10, name: 'Royaladino'},
+        {id: 11, name: 'Rakoda'},
+        {id: 12, name: 'Donta Al'},
+        {id: 13, name: 'Mystdeath'},
+        {id: 14, name: 'Calcagil'},
+        {id: 15, name: 'Nico Pally'},
+        {id: 16, name: 'Tazin Stylles'},
+        {id: 17, name: 'Juanit Ania'}
       ]
     }
   ]
