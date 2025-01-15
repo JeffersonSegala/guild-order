@@ -9,26 +9,23 @@ const Parties = ({ players }) => {
   }, [players]);
 
   var parties = [
-    {id: 1, name: 'GT FINAL > Ferumbras FINAL', eventDate: '30/12/2024', eventTime: '19:00', qtEk: 3, qtEd: 3, qtSt: 9, createdAt: '16/07/2024 00:00', 
+    {id: 1, name: 'GT FINAL > Ferumbras FINAL', eventDate: '15/01/2025', eventTime: '19:00', qtEk: 3, qtEd: 3, qtSt: 9, createdAt: '16/07/2024 00:00', 
       description: 'Reunião na GH - level 250+ ',
       partyMembers: [
         {id: 1, name: 'Bepesz'},
-        {id: 2, name: 'Simprozo'},
-        {id: 3, name: 'Ssumail'},
-        {id: 4, name: 'Raposa Estelar'},
-        {id: 5, name: 'Aime Flu'},
-        {id: 6, name: 'Benckiser'},
-        {id: 7, name: 'Archimedes Arturiano'},
-        {id: 8, name: 'Guizao Inocente'},
-        {id: 9, name: 'Nuevo hogar'},
-        {id: 10, name: 'Royaladino'},
-        {id: 11, name: 'Rakoda'},
-        {id: 12, name: 'Donta Al'},
+        {id: 2, name: 'Archimedes Arturiano'},
+        {id: 3, name: 'Shakaw Al'},
+        {id: 4, name: 'Benckiser'},
+        {id: 5, name: 'Vicious Delicious'},
+        {id: 6, name: 'Skinkz Phyrosoul'},
+        {id: 7, name: 'Fugolleon'},
+        {id: 8, name: 'Calcagil'},
+        {id: 9, name: 'Nico Pally'},
+        {id: 10, name: 'Rakoda'},
+        {id: 11, name: 'Juanit Ania'},
+        {id: 12, name: 'Choozer'},
         {id: 13, name: 'Mystdeath'},
-        {id: 14, name: 'Calcagil'},
-        {id: 15, name: 'Nico Pally'},
-        {id: 16, name: 'Tazin Stylles'},
-        {id: 17, name: 'Juanit Ania'}
+        {id: 14, name: 'Noseout'},
       ]
     }
   ]
