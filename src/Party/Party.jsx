@@ -8,7 +8,7 @@ import Constants from '../Constants';
 const Party = ({ party, players }) => {
   const [showMessage, setShowMessage] = useState('');
 
-  const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired'];
+  const rankOrder = ['Leader', 'Vice Leader', 'Honorary', 'Frontline', 'Member', 'Apprentice', 'Retired', 'Sem registro'];
   const vocOrder = ['Elite Knight', 'Elder Druid', 'Shooter'];
 
   const buildTitle = () => {
