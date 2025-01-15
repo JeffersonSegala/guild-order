@@ -26,6 +26,8 @@ const Parties = ({ players }) => {
         {id: 12, name: 'Choozer'},
         {id: 13, name: 'Mystdeath'},
         {id: 14, name: 'Noseout'},
+        {id: 15, name: 'Simprozo'},
+        
       ]
     }
   ]
