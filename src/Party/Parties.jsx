@@ -18,7 +18,7 @@ const Parties = ({ players }) => {
         {id: 4, name: 'Benckiser'},
         {id: 5, name: 'Vicious Delicious'},
         {id: 6, name: 'Skinkz Phyrosoul'},
-        {id: 7, name: 'Fugolleon'},
+        {id: 7, name: 'Fuegolleon'},
         {id: 8, name: 'Calcagil'},
         {id: 9, name: 'Nico Pally'},
         {id: 10, name: 'Rakoda'},
