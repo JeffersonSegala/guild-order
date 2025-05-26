@@ -2,6 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import OnlineMembers from './OnlineMembers/OnlineMembers';
 import Header from './Components/Header/Header';
+import LastLoreKeeper from './LastLoreKeeper/LastLoreKeeper';
 
 function App() {
   const [guild, setGuild] = useState([]);
@@ -27,6 +28,8 @@ function App() {
       <div className="flex-container">
 
         <OnlineMembers members={guild} />
+
+        <LastLoreKeeper/>
 
       </div>
 
