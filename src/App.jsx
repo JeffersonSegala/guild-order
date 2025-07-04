@@ -29,8 +29,6 @@ function App() {
 
         <OnlineMembers members={guild} />
 
-        <LastLoreKeeper/>
-
       </div>
 
     </div>
