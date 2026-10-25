@@ -13,7 +13,7 @@ function App() {
   }, []);
 
   const fetchOrder = () => {
-    fetch('https://api.tibiadata.com/v4/guild/order')
+    fetch('https://api.tibiadata.com/v5/guild/order')
       .then(response => response.json())
       .then(data => {
         setGuild(data.guild.members)
